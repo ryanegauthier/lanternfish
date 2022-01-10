@@ -26,14 +26,14 @@ int main () {
       cout << lanternfish[i] << " ";
   cout << "\n";
   
-  std::chrono::duration<double> elapsed_seconds;
   for (int i=0; i<days_to_evaluate; ++i) {
     sort(lanternfish.begin(), lanternfish.end());      
     advance_one_day(lanternfish);
     generatenewlanternfish(lanternfish);
   }
+  
   cout << "After " + to_string(days_to_evaluate) + " days there are " + to_string(lanternfish.size()) + " lanternfish.";
-  cout << "\n";
+  cout << endl;
 
   return 0;
 }
