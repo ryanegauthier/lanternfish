@@ -5,8 +5,6 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-#include <chrono>
-#include <ctime>  
 using namespace std;
 
 void advance_one_day (vector<int> &arg);
