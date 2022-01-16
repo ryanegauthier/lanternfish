@@ -29,7 +29,7 @@ int main () {
 
   //Display initial state (from CSV file)
   cout << "Initial state: ";
-  for (int i = 0; i <= lanternfish.size(); i++)
+  for (int i = 0; i < lanternfish.size(); i++)
       cout << lanternfish[i] << " ";
   cout << endl;
   
