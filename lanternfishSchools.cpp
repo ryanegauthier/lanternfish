@@ -7,23 +7,23 @@
 #include <algorithm>
 using namespace std;
 
-vector<long long> separateIntoSchools (vector<long long> &arg, int max_lifecycle);
+vector<uint64_t> separateIntoSchools (vector<uint64_t> &arg, int max_lifecycle);
 //This will count the timers and separate the fish into schools based on timers
 
-void advance_one_day (vector<long long> &arg);
+void advance_one_day (vector<uint64_t> &arg);
 //This will handle decrementing the timers for the lanternfish lifecycle
 
-void generatenewlanternfish (vector<long long> &arg, long long fishToGenerate, int recurring_lifecycle, int max_lifecycle);
+void generatenewlanternfish (vector<uint64_t> &arg, uint64_t fishToGenerate, int recurring_lifecycle, int max_lifecycle);
 //This generates new fish and resets the timer to 6 for all zeros from yesterday
 
-vector<long long> inputFile (string fileName);
+vector<uint64_t> inputFile (string fileName);
 //This takes in a CSV file (single line) of initial lanternfish timers and builds 
 //the initial-state vector
 
 int main () {
 
   //Update this file name for example/real life inputs
-  vector<long long> lanternfish = inputFile("fish.txt");
+  vector<uint64_t> lanternfish = inputFile("fish.txt");
   
   //Dynamic input for days at start of the life cycle of lanternfish
   int initial_lifecycle;
@@ -46,12 +46,12 @@ int main () {
       cout << lanternfish[i] << " ";
   cout << '\n';
 
-  vector<long long> timerSchools(initial_lifecycle);
+  vector<uint64_t> timerSchools(initial_lifecycle);
   timerSchools = separateIntoSchools(lanternfish, initial_lifecycle);
 
   for (int i=0; i<days_to_evaluate; i++) {
     //store the zeroes from yesterday to not overwrite as we shift the schools of timers down
-    long long zeroes = timerSchools[0];
+    uint64_t zeroes = timerSchools[0];
     //Advance one day (shift all timers down)
     advance_one_day(timerSchools);
     //If yesterday had any zeroes - reset the timer (to the recurring lifecycle) 
@@ -59,7 +59,7 @@ int main () {
     generatenewlanternfish(timerSchools, zeroes, reset_lifecycle, initial_lifecycle);
   }
 
-  long long totalFish = 0;
+  uint64_t totalFish = 0;
   for (int i = 0; i < timerSchools.size(); i++)
   {
     //Add the "counts" of all the schools of timers at the end of the observation
@@ -72,7 +72,7 @@ int main () {
   return 0;
 }
 
-vector<long long> inputFile (string fileName){
+vector<uint64_t> inputFile (string fileName){
   //input CSV file and generate a vector of inital lanternfish timers 
   string line;
   string csv_values;
@@ -88,7 +88,7 @@ vector<long long> inputFile (string fileName){
 
   else cout << "Unable to open file"; 
 
-  vector<long long> initialState;
+  vector<uint64_t> initialState;
   stringstream s_stream(csv_values); //create string stream from the string
   while(s_stream.good()) {
       string substr;
@@ -99,13 +99,13 @@ vector<long long> inputFile (string fileName){
   return initialState;
 }
 
-void generatenewlanternfish (vector<long long> &arg, long long fishToGenerate, int reset_lifecycle, int initial_lifecycle) {
+void generatenewlanternfish (vector<uint64_t> &arg, uint64_t fishToGenerate, int reset_lifecycle, int initial_lifecycle) {
   //update the lanternfish timer vector using the zeroes from yesterday
   arg[reset_lifecycle] += fishToGenerate;
   arg[initial_lifecycle] = fishToGenerate;
 }
 
-void advance_one_day (vector<long long> &arg) {
+void advance_one_day (vector<uint64_t> &arg) {
   //Move all the timer counts down a day
   int allTimers = arg.size();
   for (int n=0; n<(allTimers - 1); n++){
@@ -113,10 +113,10 @@ void advance_one_day (vector<long long> &arg) {
   }
 }
 
-vector<long long> separateIntoSchools (vector<long long> &arg, int max_lifecycle) {
+vector<uint64_t> separateIntoSchools (vector<uint64_t> &arg, int max_lifecycle) {
   //this function sets up the simple starting vector into a vector that holds the schools of fish 
   // that share the same timer on the first day
-  vector<long long> timerSchools;
+  vector<uint64_t> timerSchools;
   for (int n=0; n <= max_lifecycle; n++)
     timerSchools.push_back(count(arg.begin(), arg.end(), n));
   
